@@ -38,6 +38,26 @@ describe('classroom review game', () => {
     const game = create(); game.renameTeam(0, 'Debuggers'); game.open(0, 0); game.score(0, true); game.open(0, 1); game.reset();
     expect(game.teams[0]).toEqual({ name: 'Debuggers', score: 0 }); expect(game.current).toBeNull(); expect(game.played.size).toBe(0); expect(game.history).toHaveLength(0);
   });
+  it('removes the last team while keeping at least one team', () => {
+    const game = create();
+    game.removeTeam();
+    expect(game.teams.map(t => t.name)).toEqual(['Team 1', 'Team 2', 'Team 3']);
+    for (let i = 0; i < 5; i++) game.removeTeam();
+    expect(game.teams).toEqual([{ name: 'Team 1', score: 0 }]);
+  });
+  it('keeps completed clues and remaining undo history when removing a scored team', () => {
+    const game = create();
+    game.open(0, 0); game.score(0, true);
+    game.open(0, 1); game.score(3, false); game.score(3, true);
+    game.removeTeam(); game.addTeam();
+    expect(game.played.has('0-1')).toBe(true);
+    game.undo();
+    expect(game.teams[0].score).toBe(0);
+    expect(game.teams[3].score).toBe(0);
+    expect(game.played.has('0-0')).toBe(false);
+    expect(game.played.has('0-1')).toBe(true);
+    expect(() => game.undo()).not.toThrow();
+  });
   it('announces shared winners and updates after undo', () => {
     const game = create();
     for (let c = 0; c < 6; c++) for (let row = 0; row < 5; row++) { game.open(c, row); game.score(c % 2, true); }

@@ -19,7 +19,7 @@
       <progress [value]="game.played.size" [max]="game.total" aria-label="Clues completed"></progress></div>
   </div>
 </section>
-<app-scoreboard [teams]="game.teams" (addTeam)="addTeam()" (rename)="renameTeam($event)" />
+<app-scoreboard [teams]="game.teams" (addTeam)="addTeam()" (removeTeam)="removeTeam()" (rename)="renameTeam($event)" />
 <div class="game-status"><p role="status" [class.winner]="game.complete">{{ game.announcement }}</p><button class="text-button" [disabled]="!game.history.length" (click)="undo()">↶ Undo last score</button></div>
 <div class="study-note"><span class="study-icon" aria-hidden="true">&lt;/&gt;</span><p><strong>Build understanding, not just a score.</strong> Practice programming basics, types, input/output, expressions, conditionals, and loops. Confirm coverage against your {{ exam().title }} syllabus.</p></div>
 @if (game.current; as current) {

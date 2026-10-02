@@ -50,6 +50,14 @@ export class GameState {
   addTeam(): void {
     if (this.teams.length < 6) this.teams.push({ name: `Team ${this.teams.length + 1}`, score: 0 });
   }
+  removeTeam(): void {
+    if (this.teams.length <= 1) return;
+    const removed = this.teams.pop()!;
+    // Keep completed clues, but never apply a removed team's undo to a new team.
+    this.history = this.history.filter(action => action.teamIndex < this.teams.length);
+    this.status = `Removed ${removed.name}.`;
+    this.clueStatus = '';
+  }
   renameTeam(index: number, name: string): void {
     if (this.teams[index]) this.teams[index].name = name.trim().slice(0, 30) || `Team ${index + 1}`;
   }

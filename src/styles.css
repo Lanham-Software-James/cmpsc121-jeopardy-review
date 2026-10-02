@@ -68,6 +68,8 @@ progress::-webkit-progress-bar { background: #e7edf3; }
 progress::-webkit-progress-value { background: var(--blue); }
 progress::-moz-progress-bar { background: var(--blue); }
 .score-heading { margin: 25px 0 15px; }
+.score-heading { flex-wrap: wrap; }
+.team-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .teams { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .team { border: 1px solid var(--border); border-top: 3px solid var(--team-color); border-radius: 6px; padding: 13px 16px; }
 .team-top { display: flex; align-items: center; gap: 8px; }

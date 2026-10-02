@@ -6,7 +6,10 @@ import { Team } from '../../core/exam.model';
   selector: 'app-scoreboard', imports: [DecimalPipe],
   template: `
     <div class="section-heading score-heading"><div><h2>The scoreboard</h2><p>A little teamwork. A little friendly competition.</p></div>
-      <button class="text-button" [disabled]="teams().length >= 6" (click)="addTeam.emit()">＋ Add team</button>
+      <div class="team-actions">
+        <button class="text-button" [disabled]="teams().length >= 6" (click)="addTeam.emit()">＋ Add team</button>
+        <button class="text-button" [disabled]="teams().length <= 1" (click)="removeTeam.emit()" title="Remove the last team">− Remove team</button>
+      </div>
     </div>
     <section class="teams" aria-label="Team scores">
       @for (team of teams(); track $index; let i = $index) {
@@ -25,6 +28,7 @@ import { Team } from '../../core/exam.model';
 export class ScoreboardComponent {
   teams = input.required<readonly Team[]>();
   addTeam = output<void>();
+  removeTeam = output<void>();
   rename = output<{ index: number; name: string }>();
   readonly colors = ['#1e407c', '#3b806f', '#8a6496', '#bc7540', '#527f9a', '#a74c66'];
 }

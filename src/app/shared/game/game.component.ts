@@ -23,6 +23,7 @@ export class GameComponent implements OnInit {
   undo(): void { this.game.undo(); this.sync(); }
   reset(): void { this.game.reset(); this.sync(); }
   addTeam(): void { this.game.addTeam(); this.sync(); }
+  removeTeam(): void { this.game.removeTeam(); this.sync(); }
   renameTeam(event: { index: number; name: string }): void { this.game.renameTeam(event.index, event.name); this.sync(); }
   @HostListener('document:fullscreenchange') onFullscreenChange(): void { this.fullscreen = !!document.fullscreenElement; }
   async toggleFullscreen(): Promise<void> {
