@@ -1,0 +1,42 @@
+<section class="intro" aria-labelledby="review-title">
+  <div><p class="eyebrow">A little practice. A lot of possibility.</p>
+    <h1 id="review-title">Code. Think. <span>Jeopardy!</span></h1>
+    <p class="intro-copy">{{ exam().description }}</p>
+  </div>
+  <aside class="exam-summary"><span class="eyebrow">{{ exam().title }} review</span><strong>{{ exam().subject }}</strong>
+    <span>{{ exam().categories.length }} categories <span aria-hidden="true">·</span> {{ game.total }} clues <span aria-hidden="true">·</span> One shared challenge</span></aside>
+</section>
+<section class="board-section" aria-labelledby="board-title">
+  <div class="section-heading board-heading"><div><h2 id="board-title">Pick your challenge</h2><p>Choose a category. Name your points.</p></div>
+    <div class="toolbar"><button (click)="helpDialog.showModal()"><span aria-hidden="true">ⓘ</span> How to play</button>
+      <button (click)="toggleFullscreen()">{{ fullscreen ? 'Exit full screen ↙' : 'Full screen ↗' }}</button>
+      <button class="text-button" (click)="resetDialog.showModal()">↻ New game</button></div>
+  </div>
+  <p class="mobile-board-hint">Scroll sideways to explore all categories <span aria-hidden="true">→</span></p>
+  <app-board [categories]="exam().categories" [played]="game.played" (clueSelected)="game.open($event.category, $event.row)" />
+  <div class="board-bottom"><span class="board-hint">{{ game.complete ? 'Every clue is a step forward. Well played!' : 'Think it through. Talk it out. Make your move.' }}</span>
+    <div class="progress-group"><span aria-live="polite"><strong>{{ game.played.size }}</strong> / {{ game.total }} clues played</span>
+      <progress [value]="game.played.size" [max]="game.total" aria-label="Clues completed"></progress></div>
+  </div>
+</section>
+<app-scoreboard [teams]="game.teams" (addTeam)="addTeam()" (rename)="renameTeam($event)" />
+<div class="game-status"><p role="status" [class.winner]="game.complete">{{ game.announcement }}</p><button class="text-button" [disabled]="!game.history.length" (click)="undo()">↶ Undo last score</button></div>
+<div class="study-note"><span class="study-icon" aria-hidden="true">&lt;/&gt;</span><p><strong>Build understanding, not just a score.</strong> Practice programming basics, types, input/output, expressions, conditionals, and loops. Confirm coverage against your {{ exam().title }} syllabus.</p></div>
+@if (game.current; as current) {
+  <app-clue-dialog [clue]="exam().categories[current.category].clues[current.row]"
+    [category]="exam().categories[current.category].name" [value]="current.value" [teams]="game.teams" [status]="game.clueStatus"
+    (closed)="game.close()" (finished)="finish()" (scored)="score($event)" />
+}
+<dialog #helpDialog aria-labelledby="help-title">
+  <div class="modal-top"><span class="eyebrow">Your classroom. Your challenge.</span><button class="icon-button" aria-label="Close instructions" (click)="helpDialog.close()">×</button></div>
+  <h2 id="help-title">Let’s play.</h2><p>Rename the teams on the scoreboard, then choose a point value. The instructor reads the clue and selects the responding team.</p>
+  <ol class="instructions"><li>The 30-second timer starts when a clue opens. Pause or restart it as needed; it never scores automatically.</li><li><strong>Correct</strong> adds the clue’s value and completes the clue.</li><li><strong>Incorrect</strong> subtracts its value. Another team may try; negative scores are allowed.</li><li>Reveal the answer for an explanation. Use <strong>No answer / finish clue</strong> to complete it without awarding points.</li></ol>
+  <p>Closing a clue leaves it available. Scores already awarded or deducted stay in place. Undo reverses the most recent score and reopens a clue completed by that score.</p>
+  <p>The highest score after all {{ game.total }} clues wins; ties share the win. Answers need not be phrased as questions.</p>
+  <p class="muted">Up to six teams can play. Progress lasts while this page stays open and resets on refresh.</p>
+  <button class="primary" (click)="helpDialog.close()">Back to the board →</button>
+</dialog>
+<dialog #resetDialog class="small-dialog" aria-labelledby="reset-title">
+  <p class="eyebrow">A fresh start</p><h2 id="reset-title">Ready for a new game?</h2><p>This clears every score and restores all clues. Your team names stay the same.</p>
+  <div class="judge-buttons"><button autofocus (click)="resetDialog.close()">Keep playing</button><button class="primary" (click)="reset(); resetDialog.close()">Start new game</button></div>
+</dialog>
