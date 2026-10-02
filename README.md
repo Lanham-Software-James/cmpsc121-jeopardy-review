@@ -20,6 +20,12 @@ npm run build # Production build with strict Angular template/type checks
 
 Serve `dist/exam-review/browser/` with any static web server. Hash routing supports direct exam links and refreshes without a server fallback rule. If deploying under a subdirectory, build with `npm run build -- --base-href /your-subdirectory/`. Unlike the original page, the compiled app should be served over HTTP, not opened as a file.
 
+## GitHub Actions and Pages
+
+The Tests workflow runs `npm test` for opened, updated, and reopened pull requests and every push to `main` (including merged pull requests). After tests pass on `main`, it calls the separate Deploy to GitHub Pages workflow to build and publish that same commit. Failed tests prevent deployment; pull requests never deploy.
+
+In the repository's **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**. The build uses the Pages base path automatically, supporting both repository subdirectories and custom domains.
+
 ## How to play
 
 Rename the four starting teams; add up to six. Select a clue and the responding team. Correct answers add points and complete the clue; incorrect answers subtract points and leave it open for another attempt. Reveal answers to discuss explanations. Finish an unanswered clue without awarding points, or close it to keep it available.
