@@ -1,6 +1,6 @@
 # CMPSC 121 Exam Review
 
-An Angular application for classroom exam reviews. Midterm 1 is the first exam, with the original 30 C++ practice clues organized into six categories. Its design takes inspiration from the [CSSE Open House](https://csse-open-house.jameslanham.net/) and the [Penn State brand palette](https://brand.psu.edu/design-toolkit/design-essentials): Nittany Navy, Beaver Blue, White Out, and Pugh Blue, with locally bundled Roboto.
+An Angular application for classroom exam reviews. Midterm 1 and Midterm 2 each offer 30 C++ practice clues organized into six categories, with identical game controls and styling. Its design takes inspiration from the [CSSE Open House](https://csse-open-house.jameslanham.net/) and the [Penn State brand palette](https://brand.psu.edu/design-toolkit/design-essentials): Nittany Navy, Beaver Blue, White Out, and Pugh Blue, with locally bundled Roboto.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ npm ci
 npm start
 ```
 
-Open http://localhost:4200. The initial route is `/#/reviews/midterm-1`.
+Open http://localhost:4200. The initial route is `/#/reviews/midterm-1`. Choose Midterm 2 in the navigation or open `/#/reviews/midterm-2`. Switching reviews starts a fresh game for the selected exam.
 
 ```sh
 npm test       # Game rules and question-bank checks
@@ -35,7 +35,8 @@ The 30-second timer starts automatically. It can be paused or restarted after ex
 ## Project structure
 
 - `src/app/app.routes.ts`: lazy-loaded exam routes.
-- `src/app/exams/midterm-one/`: exam-specific component and typed question bank.
+- `src/app/exams/midterm-one/`: Midterm 1 component and typed question bank.
+- `src/app/exams/midterm-two/`: Midterm 2 component and typed question bank covering functions, arguments and scope, arrays, vectors, pointers, and dynamic memory.
 - `src/app/core/exam.model.ts`: shared exam, category, clue, and team interfaces.
 - `src/app/core/game-state.ts`: framework-independent rules and score history.
 - `src/app/shared/game/`: reusable review page and game coordination.
@@ -51,4 +52,4 @@ The 30-second timer starts automatically. It can be paused or restarted after ex
 
 For a review that needs a different activity, create its own standalone component under the exam directory and compose it in that exam's page; the application shell and routing can stay the same.
 
-Edit questions in `src/app/exams/midterm-one/midterm-one.questions.ts`: `q` is the prompt, `code` is optional C++, `a` is the answer, and `why` is the explanation. Clues are original practice questions, not reproduced exam questions. Snippets assume appropriate headers, `using namespace std;`, and default stream formatting unless stated otherwise.
+Edit questions in `src/app/exams/midterm-one/midterm-one.questions.ts` or `src/app/exams/midterm-two/midterm-two.questions.ts`: `q` is the prompt, `code` is optional C++, `a` is the answer, and `why` is the explanation. Clues are original practice questions, not reproduced exam questions. Snippets assume appropriate headers, `using namespace std;`, and default stream formatting unless stated otherwise.

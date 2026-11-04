@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { GameState } from './game-state';
 import { MIDTERM_ONE_CATEGORIES } from '../exams/midterm-one/midterm-one.questions';
+import { MIDTERM_TWO_CATEGORIES } from '../exams/midterm-two/midterm-two.questions';
 
-const create = () => new GameState({ id: 'midterm-1', title: 'Midterm 1', subject: 'C++', description: '', categories: MIDTERM_ONE_CATEGORIES });
-
-describe('classroom review game', () => {
+describe.each([
+  { id: 'midterm-1', title: 'Midterm 1', categories: MIDTERM_ONE_CATEGORIES },
+  { id: 'midterm-2', title: 'Midterm 2', categories: MIDTERM_TWO_CATEGORIES }
+])('$title classroom review game', ({ id, title, categories }) => {
+  const create = () => new GameState({ id, title, subject: 'C++', description: '', categories });
   it('preserves all 30 complete practice clues', () => {
     const game = create();
     expect(game.total).toBe(30);
