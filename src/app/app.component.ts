@@ -16,7 +16,10 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     </header>
     <div class="course-bar"><div class="page-width course-inner">
       <a routerLink="/" class="course-title"><span class="code-mark" aria-hidden="true">&lt;/&gt;</span> CMPSC 121 <span class="course-divider">/</span> <span class="course-label">Exam Review</span></a>
-      <nav aria-label="Exam reviews"><a routerLink="/reviews/midterm-1" routerLinkActive="active" ariaCurrentWhenActive="page">Midterm 1</a></nav>
+      <nav aria-label="Exam reviews">
+        <a routerLink="/reviews/midterm-1" routerLinkActive="active" ariaCurrentWhenActive="page">Midterm 1</a>
+        <a routerLink="/reviews/midterm-2" routerLinkActive="active" ariaCurrentWhenActive="page">Midterm 2</a>
+      </nav>
     </div></div>
     <main id="main-content" class="page-width" tabindex="-1"><router-outlet /></main>
     <footer class="site-footer"><div class="page-width">
